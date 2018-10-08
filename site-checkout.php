@@ -121,18 +121,9 @@ $app->post("/checkout", function(){
 
 	$order->save();
 
-	switch ($_POST['payment-method']) {
+	$order->toSession();
 
-		case 1:
-			header("Location: /order/".$order->getidorder()."/pagseguro");
-			break;
-
-		case 2:
-			header("Location: /order/".$order->getidorder()."/paypal");
-			break;
-
-	}
-
+	header("Location: /payment");
 	exit;
 
 });
