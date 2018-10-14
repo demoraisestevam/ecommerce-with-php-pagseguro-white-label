@@ -472,8 +472,6 @@
 
             });
 
-            console.log(params);
-
             PagSeguroDirectPayment.createCardToken({
                 cardNumber: params.number,
                 brand: params.brand,
@@ -482,9 +480,18 @@
                 expirationYear: params.year,
                 success: function(response) {
 
-                    console.log("TOKEN", response);
-                    console.log("HASH", PagSeguroDirectPayment.getSenderHash());
-                    console.log("PARAMS", params);
+                    params.token = response.card.token;
+                    params.hash = PagSeguroDirectPayment.getSenderHash();
+ 
+                    $.post(
+                        "/payment/credit",
+                        $.param(params),
+                        function(r) {
+
+                            console.log(r);
+
+                        }
+                    )
 
                 },
                 error: function(response) {

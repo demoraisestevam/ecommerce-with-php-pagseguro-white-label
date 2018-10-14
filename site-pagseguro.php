@@ -6,6 +6,24 @@ use \Hcode\Model\Order;
 use \Hcode\Pagseguro\Config;
 use \Hcode\Pagseguro\Transporter;
 
+$app->post("/payment/credit", function(){
+
+	User::verifyLogin(false);
+
+	$order = new Order();
+
+	$order->getFromSession();
+
+	$address = $order->getAddress();
+
+	$cart = $order->getCart();
+
+	var_dump($order->getValues());
+	var_dump($address->getValues());
+	var_dump($cart->getValues());
+	
+});
+
 $app->get('/payment', function(){
 
 	User::verifyLogin(false);
@@ -38,5 +56,6 @@ $app->get('/payment', function(){
 	]);
 
 });
+
 
 ?>
